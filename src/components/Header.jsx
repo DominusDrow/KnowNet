@@ -15,7 +15,7 @@ function Header() {
       <h1 className="text-xl font-bold text-center">...</h1>
       <div className="flex gap-2">
         <a
-          href="https://github.com/tu_usuario_github"
+          href="https://github.com/DominusDrow/KnowNet.git"
           target="_blank"
           rel="noopener noreferrer"
           className="p-2 pl-0 text-blue-500 rounded-full hover:text-blue-600"

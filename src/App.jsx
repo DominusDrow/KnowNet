@@ -2,6 +2,8 @@
 import React, { useState } from 'react';
 import axios from 'axios'; // Importa Axios para realizar solicitudes HTTP
 
+import Card from './components/Card';
+
 function App() {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
@@ -27,7 +29,7 @@ function App() {
       <div className="flex">
         <input
           type="text"
-          placeholder="Ejemplo:   ((turing o machine) y (learning o deep))"
+          placeholder="Ejemplo:   turing o machine y learning "
           className="flex-grow py-2 px-3 rounded-l-lg focus:border-blue-300 focus:ring focus:outline-none"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
@@ -40,18 +42,17 @@ function App() {
           Buscar
         </button>
       </div>
-      {results.length > 0 && (
+      {results.length > 0 ? (
         <div className="mt-4">
           <h2 className="text-xl font-semibold">Resultados:</h2>
-          <ul className="mt-2">
-            {results.map((result) => (
-              <li key={result.id} className="mb-2">
-                <h3 className="text-lg font-semibold">{result.title}</h3>
-                <p>{result.content}</p>
-              </li>
-            ))}
-          </ul>
+          {results.map((result, index) => (
+
+            <Card key={index} link={result} />
+
+          ))}
         </div>
+      ) : (
+        <p className="mt-4 text-sm font-semibold text-center text-white">Aún no hay resultados :(</p>
       )}
     </div>
   );
