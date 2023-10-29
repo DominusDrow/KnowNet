@@ -1,5 +1,5 @@
 
-import React, { useState } from 'react';
+import { useState } from 'react';
 
 import Card from './components/Card';
 
@@ -8,10 +8,12 @@ function App() {
   const [kValue, setKValue] = useState('5');
   const [results, setResults] = useState([]);
   const [searchMode, setSearchMode] = useState('binaria');
+  const [loading, setLoading] = useState(false);
 
   const toggleSearchMode = () => {
     setSearchMode(searchMode === 'binaria' ? 'kmeans' : 'binaria');
     setQuery('');
+    setResults([]);
   };
 
   const handleSearch = async () => {
@@ -23,6 +25,7 @@ function App() {
       };
       url = 'https://k-means-model-backend.onrender.com/query';
 
+      setLoading(true);
       const response = await fetch(url, {
         method: 'POST',
         headers: {
@@ -37,7 +40,7 @@ function App() {
 
       const responseData = await response.json();
       setResults(responseData.map(item => "https://es.wikipedia.org" + item));
-
+      setLoading(false);
     } catch (error) {
       console.error('Error al realizar la consulta:', error);
     }
@@ -94,9 +97,16 @@ function App() {
             <Card key={index} link={result} />
           ))}
         </div>
+      ) : (loading ? (
+        <div className="mt-4">
+          <h2 className="text-xl font-semibold">Cargando...</h2>
+        </div>
       ) : (
-        <p className="mt-4 text-sm font-semibold text-center text-white">Aún no hay resultados :(</p>
-      )}
+        <div className="mt-4">
+          <h2 className="text-xl font-semibold">Sin resultados</h2>
+        </div>
+      ))}
+
     </div>
   );
 }
